@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WeatherNow - Weather Forecast</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- HEADER -->
+        <header class="header">
+
+            <div class="logo">
+                <span class="logo-icon">☁️</span>
+                <span>WeatherNow</span>
+            </div>
+
+            <div class="header-actions">
+
+                <div class="mode-switcher" aria-label="Design modes">
+                    <button class="mode-btn active" data-mode="luxury">Luxury</button>
+                    <button class="mode-btn" data-mode="colorful">Colorful</button>
+                    <button class="mode-btn" data-mode="mobile">Mobile</button>
+                </div>
+
+                <button id="unitBtn" class="unit-btn">
+                    °C
+                </button>
+
+                <button id="themeBtn" class="icon-btn">
+                    🌙
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- SEARCH -->
+        <section class="search-section">
+
+            <div class="search-box">
+
+                <span class="search-icon">🔍</span>
+
+                <input
+                    type="text"
+                    id="cityInput"
+                    placeholder="Search for any city in the world..."
+                    autocomplete="off"
+                >
+
+                <button id="searchBtn">
+                    Search
+                </button>
+
+            </div>
+
+            <div id="suggestions" class="suggestions"></div>
+
+            <div id="searchHistory" class="search-history hidden"></div>
+
+            <button id="locationBtn" class="location-btn">
+                📍 Use My Current Location
+            </button>
+
+        </section>
+
+
+        <!-- ERROR -->
+        <div id="errorBox" class="error-box hidden">
+            <span>⚠️</span>
+            <span id="errorMessage">
+                City not found
+            </span>
+        </div>
+
+
+        <!-- LOADING -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading weather data...</p>
+        </div>
+
+
+        <!-- WEATHER CONTENT -->
+        <main id="weatherContent" class="weather-content hidden">
+
+            <!-- LOCATION -->
+            <section class="location-info">
+
+                <div>
+                    <h1 id="cityName">Hyderabad</h1>
+
+                    <p id="countryName">
+                        Telangana, India
+                    </p>
+                </div>
+
+                <div class="date-time">
+                    <p id="localDate">Monday, August 31</p>
+                    <p id="localTime">10:30 PM</p>
+                </div>
+
+            </section>
+
+
+            <!-- CURRENT WEATHER -->
+            <section class="current-weather">
+
+                <div class="main-weather">
+
+                    <div id="weatherIcon" class="weather-icon">
+                        ☀️
+                    </div>
+
+                    <div>
+
+                        <div class="temperature">
+                            <span id="temperature">28</span>
+                            <span id="temperatureUnit">°C</span>
+                        </div>
+
+                        <h2 id="weatherDescription">
+                            Clear Sky
+                        </h2>
+
+                        <p class="feels-like">
+                            Feels like
+                            <span id="feelsLike">30°C</span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="weather-details">
+
+                    <div class="detail-card">
+
+                        <div class="detail-icon">
+                            💧
+                        </div>
+
+                        <div>
+                            <p>Humidity</p>
+                            <strong id="humidity">65%</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-icon">
+                            🌬️
+                        </div>
+
+                        <div>
+                            <p>Wind Speed</p>
+                            <strong id="windSpeed">
+                                12 km/h
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-icon">
+                            🌧️
+                        </div>
+
+                        <div>
+                            <p>Precipitation</p>
+                            <strong id="precipitation">
+                                0 mm
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <div class="detail-icon">
+                            ☁️
+                        </div>
+
+                        <div>
+                            <p>Cloud Cover</p>
+                            <strong id="cloudCover">
+                                20%
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- TEMPERATURE GRAPH -->
+            <section class="temperature-graph-section">
+
+                <div class="section-title">
+
+                    <div>
+                        <h2>Temperature Trend</h2>
+                        <p>Day-by-day temperature outlook</p>
+                    </div>
+
+                </div>
+
+                <div class="temperature-graph-card">
+                    <svg
+                        id="temperatureGraph"
+                        class="temperature-graph-svg"
+                        viewBox="0 0 760 240"
+                        role="img"
+                        aria-label="Temperature graph"
+                    ></svg>
+                </div>
+
+            </section>
+
+
+            <!-- SUN -->
+            <section class="sun-section">
+
+                <div class="sun-card">
+
+                    <div class="sun-icon">
+                        🌅
+                    </div>
+
+                    <div>
+                        <p>Sunrise</p>
+                        <strong id="sunrise">06:00 AM</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="sun-card">
+
+                    <div class="sun-icon">
+                        🌇
+                    </div>
+
+                    <div>
+                        <p>Sunset</p>
+                        <strong id="sunset">06:30 PM</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FORECAST -->
+            <section class="forecast-section">
+
+                <div class="section-title">
+
+                    <div>
+                        <h2>7-Day Forecast</h2>
+                        <p>Weather forecast for the upcoming days</p>
+                    </div>
+
+                </div>
+
+
+                <div id="forecastContainer" class="forecast-container">
+
+                    <!-- Forecast cards generated by JavaScript -->
+
+                </div>
+
+            </section>
+
+
+            <!-- API INFORMATION -->
+            <section class="api-info">
+
+                <p>
+                    🌍 Weather data powered by Open-Meteo
+                </p>
+
+                <p>
+                    Last updated:
+                    <span id="lastUpdated">--</span>
+                </p>
+
+            </section>
+
+        </main>
+
+
+        <!-- WELCOME SCREEN -->
+        <section id="welcome" class="welcome">
+
+            <div class="welcome-icon">
+                🌍
+            </div>
+
+            <h1>Weather Around the World</h1>
+
+            <p>
+                Search any city to get current weather conditions
+                and a 7-day forecast.
+            </p>
+
+            <div class="popular-cities">
+
+                <button class="city-btn" data-city="Hyderabad">
+                    Hyderabad
+                </button>
+
+                <button class="city-btn" data-city="London">
+                    London
+                </button>
+
+                <button class="city-btn" data-city="New York">
+                    New York
+                </button>
+
+                <button class="city-btn" data-city="Tokyo">
+                    Tokyo
+                </button>
+
+                <button class="city-btn" data-city="Dubai">
+                    Dubai
+                </button>
+
+                <button class="city-btn" data-city="Paris">
+                    Paris
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <p>
+                WeatherNow © 2026
+            </p>
+
+            <p>
+                Built with HTML, CSS, JavaScript & Open-Meteo API
+            </p>
+
+        </footer>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
